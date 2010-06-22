@@ -109,4 +109,24 @@ category: docs
   %br
   <tt>use_object_ids</tt>: Tells Mongoid to use <tt>BSON::ObjectID</tt> objects as ids instead
   of their string values.
+.title Removing Active Record
+.text
+  Now that you have a mongoid.yml you can't wait to delete that pesky database.yml, right? Do it
+  and you'll start getting ActiveRecord errors all over the place. You're don't need ActiveRecord
+  unless you're trying to use Mongo in concert with a SQL database.  Here's how you remove
+  ActiveRecord from the most recent version of Rails 3:
 
+  %ol
+    %li Open <tt>yourapp/config/application.rb</tt>
+    %li 
+      Near the top, comment out the line <tt>require 'rails/all'</tt> and add the following 
+      four lines so you end up with this:
+      %pre
+        %code.language-ruby
+          :preserve
+            #require 'rails/all'
+            require "action_controller/railtie" 
+            require "action_mailer/railtie" 
+            require "active_resource/railtie" 
+            require "mongoid/railtie"
+    %li Start up your app and welcome yourself to a life without ActiveRecord!
